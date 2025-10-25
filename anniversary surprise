@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery Reward Claim</title>
+    <!-- Favicon: Modern heart icon using SVG for 2025 updated style -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
+    <!-- Google Fonts for romantic, elegant typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Confetti library for OMG graphics -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #ffebee 0%, #ffccbc 100%); /* Romantic gradient */
+            color: #333;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* For confetti */
+        }
+        #form-container {
+            max-width: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        #form-container:hover {
+            transform: scale(1.05); /* Subtle hover animation */
+        }
+        input {
+            margin: 15px 0;
+            padding: 12px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 2px solid #ff4081;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            border-color: #e91e63;
+            outline: none;
+        }
+        button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #ff4081 0%, #e91e63 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #e91e63 0%, #ff4081 100%);
+            transform: translateY(-3px);
+        }
+        #reveal {
+            display: none;
+            margin-top: 20px;
+            max-width: 500px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            animation: fadeInScale 0.5s ease forwards; /* Fade and scale animation */
+        }
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #e91e63;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        ol {
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        ol li::marker {
+            color: #ff4081; /* Custom list markers */
+        }
+        p {
+            font-size: 1.2em;
+        }
+        /* Heart graphics for OMG factor */
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .heart {
+            position: absolute;
+            font-size: 2em;
+            color: #ff4081;
+            animation: floatUp 5s linear infinite;
+            opacity: 0.7;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts for background graphics -->
+    <div class="hearts"></div>
+
+    <div id="form-container">
+        <h1>Claim Your Special Reward!</h1>
+        <p>Enter your details to unlock the mystery. 💖</p>
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="text" id="fun-fact" placeholder="A Fun Fact About Us (e.g., our favorite movie)">
+        <button onclick="unlockReveal()">Submit & Unlock</button>
+    </div>
+    <div id="reveal">
+        <h1>Happy 1-Year Anniversary, [Her Name]! ❤️</h1>
+        <p>Surprise! This is from me, your boyfriend. Here's 12 reasons why I love you—one for each amazing month:</p>
+        <ol>
+            <li>Your smile that brightens my toughest days.</li>
+            <li>The way you laugh at my dumb jokes.</li>
+            <li>Your endless kindness to everyone around you.</li>
+            <li>Our spontaneous adventures that create the best memories.</li>
+            <li>How passionate you are about [her hobby, e.g., painting].</li>
+            <li>The comfort of just being with you in silence.</li>
+            <li>Your strength and how you inspire me daily.</li>
+            <li>Our deep conversations that last until dawn.</li>
+            <li>The little notes you leave that make my heart skip.</li>
+            <li>How you support my dreams without hesitation.</li>
+            <li>The perfect way we fit together, like puzzle pieces.</li>
+            <li>The exciting future I see with you by my side.</li>
+        </ol>
+        <p>Can't wait to make more memories today. Love you endlessly!</p>
+    </div>
+
+    <script>
+        // Generate floating hearts for OMG background
+        function createHearts() {
+            const heartsContainer = document.querySelector('.hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                heart.style.animationDuration = `${10 + Math.random() * 10}s`;
+                heartsContainer.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        function unlockReveal() {
+            const name = document.getElementById('name').value.trim();
+            const funFact = document.getElementById('fun-fact').value.trim();
+            if (name && funFact) {
+                document.getElementById('form-container').style.display = 'none';
+                document.getElementById('reveal').style.display = 'block';
+                // Trigger OMG confetti!
+                confetti({
+                    particleCount: 200,
+                    spread: 100,
+                    origin: { y: 0.6 },
+                    colors: ['#ff4081', '#e91e63', '#ffccbc'],
+                    disableForReducedMotion: true
+                });
+            } else {
+                alert('Please fill in both fields for the full surprise!');
+            }
+        }
+    </script>
+</body>
+</html>
